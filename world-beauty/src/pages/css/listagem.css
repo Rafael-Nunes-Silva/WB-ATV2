@@ -1,0 +1,14 @@
+#buttonsListagem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    /* background-color: #f1f1f1; */
+    background-color: white;
+
+    width: 40%;
+
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 25px;
+}
