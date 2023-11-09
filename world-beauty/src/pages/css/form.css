@@ -1,5 +1,5 @@
 form {    
-    width: 600px;
+    width: 400px;
 
     display: flex;
     flex-direction: column;
@@ -66,4 +66,8 @@ form button {
     margin: auto;
     padding: 5px;
     border-radius: 5px;
+}
+
+form .form-submit {
+    font-size: 24px;
 }

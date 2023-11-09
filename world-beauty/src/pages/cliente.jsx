@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar";
+import "./css/indicadorFundo.css";
 
 export default function Cliente() {
     return (
@@ -7,9 +8,9 @@ export default function Cliente() {
             <Navbar
                 elements={[
                     <a className="nav-button" href="../cliente/cadastro">Cadastro</a>,
-                    <a className="nav-button"  href="../cliente/listagem">Listagem</a>,
-                    <a className="nav-button"  href="../cliente/atualizar">Atualizar</a>,
-                    <a className="nav-button"  href="../cliente/deletar">Deletar</a>
+                    <a className="nav-button" href="../cliente/listagem">Listagem</a>,
+                    <a className="nav-button" href="../cliente/atualizar">Atualizar</a>,
+                    <a className="nav-button" href="../cliente/deletar">Deletar</a>
                 ]}
             />
             <Outlet />

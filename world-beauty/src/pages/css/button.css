@@ -7,3 +7,16 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.button-num-input {
+    margin: auto 10px;
+    width: 30px;
+
+    text-align: center;
+}

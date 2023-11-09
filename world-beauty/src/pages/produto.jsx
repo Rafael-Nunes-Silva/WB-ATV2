@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar";
+import "./css/indicadorFundo.css";
 
 export default function Produto() {
     return (
