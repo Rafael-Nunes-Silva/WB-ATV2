@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div id="App">
       <Header
-        elements={[
+        buttons={[
           <a className="nav-button" href="../cliente">Cliente</a>,
           <a className="nav-button" href="../produto">Produto</a>,
           <a className="nav-button" href="../servico">Serviço</a>

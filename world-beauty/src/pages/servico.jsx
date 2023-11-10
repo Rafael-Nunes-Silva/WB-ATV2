@@ -6,7 +6,8 @@ export default function Servico() {
     return (
         <div>
             <Navbar
-                elements={[
+                title="SERVIÇO"
+                buttons={[
                     <a className="nav-button" href="../servico/cadastro">Cadastro</a>,
                     <a className="nav-button" href="../servico/listagem">Listagem</a>,
                     <a className="nav-button" href="../servico/atualizar">Atualizar</a>,

@@ -1,6 +1,4 @@
 .texto-indicador {
-    /* background-color: white; */
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,10 +8,10 @@
 }
 
 .texto-indicador h1 {
-    font-size: 15em;
+    font-size: 15vw;
     color: transparent;
 
-    -webkit-text-stroke: 5px blueviolet;
+    -webkit-text-stroke: 0.3vw blueviolet;
 }
 
 .indicador-sec {

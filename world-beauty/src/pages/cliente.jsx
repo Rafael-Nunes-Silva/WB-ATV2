@@ -6,7 +6,8 @@ export default function Cliente() {
     return (
         <div>
             <Navbar
-                elements={[
+                title="CLIENTE"
+                buttons={[
                     <a className="nav-button" href="../cliente/cadastro">Cadastro</a>,
                     <a className="nav-button" href="../cliente/listagem">Listagem</a>,
                     <a className="nav-button" href="../cliente/atualizar">Atualizar</a>,

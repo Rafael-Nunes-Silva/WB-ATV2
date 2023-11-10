@@ -8,7 +8,7 @@ export default function Header(props) {
             </div>
             <div className="nav-container">
                 <div className="nav-buttons">
-                    {props.elements}
+                    {props.buttons}
                 </div>
             </div>
         </header>

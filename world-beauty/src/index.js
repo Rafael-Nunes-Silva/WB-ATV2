@@ -29,8 +29,8 @@ root.render(
           <Route index
             element={
               <div className="texto-indicador">
-                <h1 style={{ fontSize: 13 + 'em' }}>World Beauty</h1>
-                <h1 style={{ fontSize: 13 + 'em' }} className="indicador-sec">World Beauty</h1>
+                <h1>World Beauty</h1>
+                <h1 className="indicador-sec">World Beauty</h1>
               </div>
             }
           />
@@ -66,8 +66,8 @@ root.render(
             <Route index
               element={
                 <div className="texto-indicador">
-                  <h1>SERVICO</h1>
-                  <h1 className="indicador-sec">SERVICO</h1>
+                  <h1>SERVIÇO</h1>
+                  <h1 className="indicador-sec">SERVIÇO</h1>
                 </div>
               }
             />
