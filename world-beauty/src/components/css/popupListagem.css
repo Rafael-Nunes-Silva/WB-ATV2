@@ -50,6 +50,15 @@
     align-items: flex-start;
 }
 
+.resultado-lista-item {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    padding: 10px 15px;
+}
+
 .resultado-lista p {
     font-size: 28px;
 }

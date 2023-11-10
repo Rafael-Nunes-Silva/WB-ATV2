@@ -7,7 +7,7 @@ export default function CadastroProduto() {
     const [servExiste, setServExiste] = useState(false);
 
     const HandleSubmit = function () {
-        APIServico.AdicionarProduto(nome, valor);
+        APIServico.AdicionarServico(nome, valor);
     }
 
     return (
@@ -20,7 +20,14 @@ export default function CadastroProduto() {
                             name="nome"
                             placeholder="Nome"
                             type="text"
-                            onChange={(event) => { setNome(event.target.value) }}
+                            onChange={(event) => {
+                                if (APIServico.GetServicos().filter(serv => serv.nome === event.target.value).length <= 0) {
+                                    setNome(event.target.value);
+                                    setServExiste(false);
+                                    return;
+                                }
+                                setServExiste(true);
+                            }}
                         />
                     </div>
                 </div>
