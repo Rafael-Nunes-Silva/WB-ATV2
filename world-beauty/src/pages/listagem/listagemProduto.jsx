@@ -8,7 +8,11 @@ export default function ListagemProduto() {
     const ListarTodos = function () {
         setListagem(APIProduto.GetProdutos().map((value) =>
             <>
-                <p>{value.nome}</p><hr/>
+                <div className="resultado-lista-item">
+                    <p>{value.nome}</p>
+                    <p>R$ {value.valor}</p>
+                </div>
+                <hr />
             </>
         ));
         setMostrarResultado(true);
@@ -18,11 +22,11 @@ export default function ListagemProduto() {
         <div>
             {
                 mostrarResultado &&
-                    <PopupListagem
-                        title="Listar Todos"
-                        CloseCallback={() => setMostrarResultado(false)}
-                        listagem={listagem}
-                    />
+                <PopupListagem
+                    title="Listar Todos"
+                    CloseCallback={() => setMostrarResultado(false)}
+                    listagem={listagem}
+                />
             }
             <div className="buttons-listagem">
                 <button className="button" onClick={ListarTodos}>Listar Todos</button>
