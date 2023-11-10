@@ -30,6 +30,7 @@ export default function CadastroCliente() {
     const [telefones, setTelefones] = useState([]);
     const [produtos, setProdutos] = useState([]);
     const [servicos, setServicos] = useState([]);
+    const [clienteExiste, setClienteExiste] = useState(false);
 
     const HandleSetRGs = function (event) {
 
@@ -109,8 +110,20 @@ export default function CadastroCliente() {
                             name="cpfNumero"
                             placeholder="123.456.789-10"
                             type="text"
-                            onChange={(event) => { setCPFNumero(event.target.value) }}
+                            onChange={(event) => {
+                                setCPFNumero(event.target.value);
+                                // if(APICliente.GetClientes().filter((cliente) => cliente.cpf === event.target.value) <= 0) {
+                                //     setClienteExiste(false);
+                                //     setCPFNumero(event.target.value);
+                                //     return;
+                                // }
+                                // setClienteExiste(true);
+                            }}
                         />
+                        {
+                            clienteExiste &&
+                            <small className="alert-invalido">Um Cliente com esse nome CPF está cadastrado.</small>
+                        }
                     </div>
                     <div className="form-vertical-div">
                         <label for="cpfDataEmissao">CPF - Emissão</label>
@@ -152,12 +165,12 @@ export default function CadastroCliente() {
                             options={APIProduto.GetProdutos().map(
                                 (p) => ({ name: p.nome, value: p.valor })
                             )}
-                            // options={[
-                            //     { name: "1", value: 1 },
-                            //     { name: "2", value: 2 },
-                            //     { name: "3", value: 3 },
-                            //     { name: "4", value: 4 }
-                            // ]}
+                        // options={[
+                        //     { name: "1", value: 1 },
+                        //     { name: "2", value: 2 },
+                        //     { name: "3", value: 3 },
+                        //     { name: "4", value: 4 }
+                        // ]}
                         />
                     </div>
                     <div className="form-vertical-div">
@@ -167,17 +180,20 @@ export default function CadastroCliente() {
                             options={APIServico.GetServicos().map(
                                 (s) => ({ name: s.nome, value: s.valor })
                             )}
-                            // options={[
-                            //     { name: "1", value: 1 },
-                            //     { name: "2", value: 2 },
-                            //     { name: "3", value: 3 },
-                            //     { name: "4", value: 4 }
-                            // ]}
+                        // options={[
+                        //     { name: "1", value: 1 },
+                        //     { name: "2", value: 2 },
+                        //     { name: "3", value: 3 },
+                        //     { name: "4", value: 4 }
+                        // ]}
                         />
                     </div>
                 </div>
                 <div className="form-horizontal-div">
-                    <button type="submit" className="form-submit" onClick={() => { }}>Cadastrar</button>
+                    {
+                        !clienteExiste &&
+                        <button type="submit" className="form-submit" onClick={() => { }}>Cadastrar</button>
+                    }
                 </div>
             </form>
         </div>

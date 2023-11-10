@@ -4,8 +4,9 @@ import { APIProduto } from "../../WB-ATV1/out/Interface/APIReact";
 export default function CadastroProduto() {
     const [nome, setNome] = useState("");
     const [valor, setValor] = useState(0);
+    const [prodExiste, setProdExiste] = useState(false);
 
-    const HandleSubmit = function() {
+    const HandleSubmit = function () {
         APIProduto.AdicionarProduto(nome, valor);
     }
 
@@ -19,8 +20,19 @@ export default function CadastroProduto() {
                             name="nome"
                             placeholder="Nome"
                             type="text"
-                            onChange={(event) => { setNome(event.target.value) }}
+                            onChange={(event) => {
+                                if (APIProduto.GetProdutos().filter(prod => prod.nome === event.target.value).length <= 0) {
+                                    setNome(event.target.value);
+                                    setProdExiste(false);
+                                    return;
+                                }
+                                setProdExiste(true);
+                            }}
                         />
+                        {
+                            prodExiste &&
+                            <small className="alert-invalido">Um produto com esse nome já está cadastrado.</small>
+                        }
                     </div>
                 </div>
                 <div className="form-horizontal-div">
@@ -35,7 +47,10 @@ export default function CadastroProduto() {
                     </div>
                 </div>
                 <div className="form-horizontal-div">
-                    <button type="submit">Cadastrar</button>
+                    {
+                        !prodExiste &&
+                        <button type="submit" className="form-submit">Cadastrar</button>
+                    }
                 </div>
             </form>
         </div>
