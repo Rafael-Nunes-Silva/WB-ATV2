@@ -5,32 +5,30 @@ import Select from "../../components/select";
 export default function DeletarServico() {
     const [nomeServSelecionado, setNomeServSelecionado] = useState("");
 
-    function HandleSubmit (event) {
+    function HandleSubmit(event) {
         APIServico.Deletar(nomeServSelecionado);
     }
 
     return (
-        <div>
-            <form onSubmit={HandleSubmit} className="form">
-                <div className="form-horizontal-div">
-                    <div className="form-vertical-div">
-                        <label for="servico">Serviço</label>
-                        <Select
-                            name="servico"
-                            options={APIServico.GetServicos().map(
-                                (s) => ({ name: s.nome, value: s.valor })
-                            )}
-                            onChange={(event) => {
-                                const selecionado = event.target.options[event.target.selectedIndex];
-                                setNomeServSelecionado(selecionado.innerText);
-                            }}
-                        />
-                    </div>
+        <form onSubmit={HandleSubmit} className="form">
+            <div className="form-horizontal-div">
+                <div className="form-vertical-div">
+                    <label for="servico">Serviço</label>
+                    <Select
+                        name="servico"
+                        options={APIServico.GetServicos().map(
+                            (s) => ({ name: s.nome, value: s.valor })
+                        )}
+                        onChange={(event) => {
+                            const selecionado = event.target.options[event.target.selectedIndex];
+                            setNomeServSelecionado(selecionado.innerText);
+                        }}
+                    />
                 </div>
-                <div className="form-horizontal-div">
-                    <button type="submit" className="sec-button">Deletar</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div className="form-horizontal-div">
+                <button type="submit" className="sec-button">Deletar</button>
+            </div>
+        </form>
     );
 }

@@ -85,141 +85,139 @@ export default function CadastroCliente() {
     }
 
     return (
-        <div>
-            <form onSubmit={HandleSubmit} className="form">
-                <div className="form-horizontal-div">
-                    <div className="form-vertical-div">
-                        <label for="nome">Nome</label>
-                        <input required
-                            name="nome"
-                            placeholder="Nome"
-                            type="text"
-                            onChange={(event) => { setNome(event.target.value) }}
-                        />
-                    </div>
+        <form onSubmit={HandleSubmit} className="form">
+            <div className="form-horizontal-div">
+                <div className="form-vertical-div">
+                    <label for="nome">Nome</label>
+                    <input required
+                        name="nome"
+                        placeholder="Nome"
+                        type="text"
+                        onChange={(event) => { setNome(event.target.value) }}
+                    />
                 </div>
-                <div className="form-horizontal-div">
-                    <div className="form-vertical-div">
-                        <label for="nomeSocial">Nome Social</label>
-                        <input
-                            name="nomeSocial"
-                            placeholder="Nome Social"
-                            type="text"
-                            onChange={(event) => { setNomeSocial(event.target.value) }}
-                        />
-                    </div>
-                    <div className="form-vertical-div">
-                        <label for="genero">Genero</label>
-                        <input
-                            name="genero"
-                            placeholder="Genero"
-                            type="text"
-                            onChange={(event) => { setGenero(event.target.value) }}
-                        />
-                    </div>
+            </div>
+            <div className="form-horizontal-div">
+                <div className="form-vertical-div">
+                    <label for="nomeSocial">Nome Social</label>
+                    <input
+                        name="nomeSocial"
+                        placeholder="Nome Social"
+                        type="text"
+                        onChange={(event) => { setNomeSocial(event.target.value) }}
+                    />
                 </div>
-                <div className="form-horizontal-div">
-                    <div className="form-vertical-div">
-                        <label for="cpfNumero">CPF - Números</label>
-                        <input required
-                            name="cpfNumero"
-                            placeholder="12345678910"
-                            type="text"
-                            maxLength={11}
-                            onChange={(event) => {
-                                if (event.target.value.length !== 11) {
-                                    setCpfInvalido(true);
-                                    return;
-                                }
+                <div className="form-vertical-div">
+                    <label for="genero">Genero</label>
+                    <input
+                        name="genero"
+                        placeholder="Genero"
+                        type="text"
+                        onChange={(event) => { setGenero(event.target.value) }}
+                    />
+                </div>
+            </div>
+            <div className="form-horizontal-div">
+                <div className="form-vertical-div">
+                    <label for="cpfNumero">CPF - Números</label>
+                    <input required
+                        name="cpfNumero"
+                        placeholder="12345678910"
+                        type="text"
+                        maxLength={11}
+                        onChange={(event) => {
+                            if (event.target.value.length !== 11) {
+                                setCpfInvalido(true);
+                                return;
+                            }
 
-                                if (APICliente.GetClientes().filter((cliente) => cliente.CPF.valor === event.target.value) > 0) {
-                                    setCpfInvalido(true);
-                                    return;
-                                }
+                            if (APICliente.GetClientes().filter((cliente) => cliente.CPF.valor === event.target.value) > 0) {
+                                setCpfInvalido(true);
+                                return;
+                            }
 
-                                setCpfInvalido(false);
-                                setCPFNumero(event.target.value);
-                            }}
-                        />
-                        {
-                            cpfInvalido &&
-                            <small className="alert-invalido">CPF inválido ou já cadastrado.</small>
-                        }
-                    </div>
-                    <div className="form-vertical-div">
-                        <label for="cpfDataEmissao">CPF - Emissão</label>
-                        <input required
-                            name="cpfDataEmissao"
-                            placeholder="dd/mm/aaaa"
-                            type="date"
-                            onChange={(event) => { setCPFDataEmissao(event.target.value) }}
-                        />
-                    </div>
-                </div>
-                <div className="form-horizontal-div">
-                    <div className="form-vertical-div">
-                        <label for="rgs">RGs</label>
-                        <textarea
-                            name="rgs"
-                            placeholder="1234567890, dd/mm/aaaa
-0987654321, dd/mm/aaaa"
-                            onChange={HandleSetRGs}
-                        />
-                    </div>
-                    <div className="form-vertical-div">
-                        <label for="telefones">Telefones</label>
-                        <textarea
-                            name="telefones"
-                            placeholder="(xx) xxxxx-xxxx
-(yy) yyyyy-yyyy
-(zz) zzzzz-zzzz"
-                            onBlur={HandleSetTelefones}
-                        />
-                    </div>
-                </div>
-                <div className="form-horizontal-div">
-                    <div className="form-vertical-div">
-                        <label for="produtos">Produtos</label>
-                        <Select multiple
-                            name="produtos"
-                            options={APIProduto.GetProdutos().map(
-                                (p) => ({ name: p.nome, value: p.valor })
-                            )}
-                            onChange={(event) => {
-                                const prods = Array.from(event.target.selectedOptions).map(op => op.innerText);
-
-                                const selec = APIProduto.GetProdutos().filter(prod =>
-                                    prods.includes(prod.nome)
-                                );
-                                setProdutos(selec);
-                            }}
-                        />
-                    </div>
-                    <div className="form-vertical-div">
-                        <label for="servicos">Serviços</label>
-                        <Select multiple
-                            name="servicos"
-                            options={APIServico.GetServicos().map(
-                                (s) => ({ name: s.nome, value: s.valor })
-                            )}
-                            onChange={(event) => {
-                                const servs = Array.from(event.target.selectedOptions).map(op => op.innerText);
-
-                                const selec = APIServico.GetServicos().filter(serv =>
-                                    servs.includes(serv.nome)
-                                );
-                                setServicos(selec);
-                            }}
-                        />
-                    </div>
-                </div>
-                <div className="form-horizontal-div">
+                            setCpfInvalido(false);
+                            setCPFNumero(event.target.value);
+                        }}
+                    />
                     {
-                        !cpfInvalido &&
-                        <button type="submit" className="sec-button">Cadastrar</button>
+                        cpfInvalido &&
+                        <small className="alert-invalido">CPF inválido ou já cadastrado.</small>
                     }
                 </div>
-            </form>
-        </div >
+                <div className="form-vertical-div">
+                    <label for="cpfDataEmissao">CPF - Emissão</label>
+                    <input required
+                        name="cpfDataEmissao"
+                        placeholder="dd/mm/aaaa"
+                        type="date"
+                        onChange={(event) => { setCPFDataEmissao(event.target.value) }}
+                    />
+                </div>
+            </div>
+            <div className="form-horizontal-div">
+                <div className="form-vertical-div">
+                    <label for="rgs">RGs</label>
+                    <textarea
+                        name="rgs"
+                        placeholder="1234567890, dd/mm/aaaa
+0987654321, dd/mm/aaaa"
+                        onChange={HandleSetRGs}
+                    />
+                </div>
+                <div className="form-vertical-div">
+                    <label for="telefones">Telefones</label>
+                    <textarea
+                        name="telefones"
+                        placeholder="(xx) xxxxx-xxxx
+(yy) yyyyy-yyyy
+(zz) zzzzz-zzzz"
+                        onBlur={HandleSetTelefones}
+                    />
+                </div>
+            </div>
+            <div className="form-horizontal-div">
+                <div className="form-vertical-div">
+                    <label for="produtos">Produtos</label>
+                    <Select multiple
+                        name="produtos"
+                        options={APIProduto.GetProdutos().map(
+                            (p) => ({ name: p.nome, value: p.valor })
+                        )}
+                        onChange={(event) => {
+                            const prods = Array.from(event.target.selectedOptions).map(op => op.innerText);
+
+                            const selec = APIProduto.GetProdutos().filter(prod =>
+                                prods.includes(prod.nome)
+                            );
+                            setProdutos(selec);
+                        }}
+                    />
+                </div>
+                <div className="form-vertical-div">
+                    <label for="servicos">Serviços</label>
+                    <Select multiple
+                        name="servicos"
+                        options={APIServico.GetServicos().map(
+                            (s) => ({ name: s.nome, value: s.valor })
+                        )}
+                        onChange={(event) => {
+                            const servs = Array.from(event.target.selectedOptions).map(op => op.innerText);
+
+                            const selec = APIServico.GetServicos().filter(serv =>
+                                servs.includes(serv.nome)
+                            );
+                            setServicos(selec);
+                        }}
+                    />
+                </div>
+            </div>
+            <div className="form-horizontal-div">
+                {
+                    !cpfInvalido &&
+                    <button type="submit" className="sec-button">Cadastrar</button>
+                }
+            </div>
+        </form>
     );
 }
