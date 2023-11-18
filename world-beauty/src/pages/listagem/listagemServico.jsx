@@ -5,7 +5,7 @@ import PopupListagem from "../../components/popupListagem";
 export default function ListagemServico() {
     const [listagem, setListagem] = useState([]);
     const [mostrarResultado, setMostrarResultado] = useState(false);
-    const ListarTodos = function () {
+    function ListarTodos () {
         setListagem(APIServico.GetServicos().map((value) =>
             <>
                 <div className="resultado-lista-item">
