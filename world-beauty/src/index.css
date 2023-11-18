@@ -15,6 +15,14 @@ button {
   cursor: pointer;
 }
 
+button input {
+  border-radius: 5px;
+}
+
+button input[type=text] {
+  min-width: 100px;
+}
+
 .alert-invalido {
   color: red;
   text-align: center;

@@ -11,10 +11,7 @@ function Cadastrar(nome, nomeSocial, genero, CPFNumero, CPFDataEmissao, RGs, tel
         APICPF.NovoCPF(CPFNumero, new Date(CPFDataEmissao)),
         RGs,
         Date.now(),
-        telefones.map((tel) => {
-            const matches = tel.match(/(\(\d{2}\))(\d{5})(\d{4})/);
-            return APITelefone.NovoTelefone(matches[1], matches[2] + matches[3]);
-        }),
+        telefones,
         produtos,
         servicos
     );
@@ -30,10 +27,27 @@ export default function CadastroCliente() {
     const [telefones, setTelefones] = useState([]);
     const [produtos, setProdutos] = useState([]);
     const [servicos, setServicos] = useState([]);
-    const [clienteExiste, setClienteExiste] = useState(false);
+    const [cpfInvalido, setCpfInvalido] = useState(false);
 
     const HandleSetRGs = function (event) {
+        const novosRGs = [];
 
+        const input = event.target.value.split("\n");
+        const inputFormatado = [];
+        for (let i = 0; i < input.length; i++) {
+            try {
+                const matches = input[i].replace(" ", "").match(/(\d*).(\d{2}.\d{2}.\d{4})/);
+                inputFormatado.push(`${matches[1]}, ${matches[2]}`);
+
+                novosRGs.push(APIRG.NovoRG(matches[1], matches[2]));
+            }
+            catch {
+                inputFormatado.push(`${input[i]}`);
+            }
+        }
+        event.target.value = inputFormatado.join("\n");
+
+        setRGs(novosRGs);
     }
     const HandleSetTelefones = function (event) {
         const novosTelefones = [];
@@ -41,21 +55,22 @@ export default function CadastroCliente() {
         const input = event.target.value.split("\n");
         const inputFormatado = [];
         for (let i = 0; i < input.length; i++) {
-            if (input[i].length < 11) {
-                inputFormatado.push(`${input[i]}`);
-                continue;
-            }
-            const matches = input[i].replace(/\D/g, '').match(/(\d{2})(\d{5})(\d{4})/);
-            inputFormatado.push(`(${matches[1]}) ${matches[2]}-${matches[3]}`);
+            try {
+                const matches = input[i].replace(/\D/g, '').match(/(\d{2})(\d{5})(\d{4})/);
+                inputFormatado.push(`(${matches[1]}) ${matches[2]}-${matches[3]}`);
 
-            novosTelefones.push(APITelefone.NovoTelefone(matches[1], matches[2] + matches[3]));
+                novosTelefones.push(APITelefone.NovoTelefone(matches[1], matches[2] + matches[3]));
+            }
+            catch {
+                inputFormatado.push(`${input[i]}`);
+            }
         }
         event.target.value = inputFormatado.join("\n");
 
         setTelefones(novosTelefones);
     }
 
-    const HandleSubmit = function (event) {
+    function HandleSubmit(event) {
         Cadastrar(
             nome,
             nomeSocial,
@@ -71,11 +86,11 @@ export default function CadastroCliente() {
 
     return (
         <div>
-            <form onSubmit={HandleSubmit} className="form-cadastro">
+            <form onSubmit={HandleSubmit} className="form">
                 <div className="form-horizontal-div">
                     <div className="form-vertical-div">
                         <label for="nome">Nome</label>
-                        <input
+                        <input required
                             name="nome"
                             placeholder="Nome"
                             type="text"
@@ -106,28 +121,34 @@ export default function CadastroCliente() {
                 <div className="form-horizontal-div">
                     <div className="form-vertical-div">
                         <label for="cpfNumero">CPF - Números</label>
-                        <input
+                        <input required
                             name="cpfNumero"
-                            placeholder="123.456.789-10"
+                            placeholder="12345678910"
                             type="text"
+                            maxLength={11}
                             onChange={(event) => {
+                                if (event.target.value.length !== 11) {
+                                    setCpfInvalido(true);
+                                    return;
+                                }
+
+                                if (APICliente.GetClientes().filter((cliente) => cliente.CPF.valor === event.target.value) > 0) {
+                                    setCpfInvalido(true);
+                                    return;
+                                }
+
+                                setCpfInvalido(false);
                                 setCPFNumero(event.target.value);
-                                // if(APICliente.GetClientes().filter((cliente) => cliente.cpf === event.target.value) <= 0) {
-                                //     setClienteExiste(false);
-                                //     setCPFNumero(event.target.value);
-                                //     return;
-                                // }
-                                // setClienteExiste(true);
                             }}
                         />
                         {
-                            clienteExiste &&
-                            <small className="alert-invalido">Um Cliente com esse nome CPF está cadastrado.</small>
+                            cpfInvalido &&
+                            <small className="alert-invalido">CPF inválido ou já cadastrado.</small>
                         }
                     </div>
                     <div className="form-vertical-div">
                         <label for="cpfDataEmissao">CPF - Emissão</label>
-                        <input
+                        <input required
                             name="cpfDataEmissao"
                             placeholder="dd/mm/aaaa"
                             type="date"
@@ -140,9 +161,9 @@ export default function CadastroCliente() {
                         <label for="rgs">RGs</label>
                         <textarea
                             name="rgs"
-                            placeholder="1234567890
-0987654321"
-                            onChange={(event) => { setRGs(event.target.value) }}
+                            placeholder="1234567890, dd/mm/aaaa
+0987654321, dd/mm/aaaa"
+                            onChange={HandleSetRGs}
                         />
                     </div>
                     <div className="form-vertical-div">
@@ -152,7 +173,6 @@ export default function CadastroCliente() {
                             placeholder="(xx) xxxxx-xxxx
 (yy) yyyyy-yyyy
 (zz) zzzzz-zzzz"
-                            // onChange={(event) => { setTelefones(event.target.value) }}
                             onBlur={HandleSetTelefones}
                         />
                     </div>
@@ -165,37 +185,41 @@ export default function CadastroCliente() {
                             options={APIProduto.GetProdutos().map(
                                 (p) => ({ name: p.nome, value: p.valor })
                             )}
-                        // options={[
-                        //     { name: "1", value: 1 },
-                        //     { name: "2", value: 2 },
-                        //     { name: "3", value: 3 },
-                        //     { name: "4", value: 4 }
-                        // ]}
+                            onChange={(event) => {
+                                const prods = Array.from(event.target.selectedOptions).map(op => op.innerText);
+
+                                const selec = APIProduto.GetProdutos().filter(prod =>
+                                    prods.includes(prod.nome)
+                                );
+                                setProdutos(selec);
+                            }}
                         />
                     </div>
                     <div className="form-vertical-div">
                         <label for="servicos">Serviços</label>
-                        <Select
+                        <Select multiple
                             name="servicos"
                             options={APIServico.GetServicos().map(
                                 (s) => ({ name: s.nome, value: s.valor })
                             )}
-                        // options={[
-                        //     { name: "1", value: 1 },
-                        //     { name: "2", value: 2 },
-                        //     { name: "3", value: 3 },
-                        //     { name: "4", value: 4 }
-                        // ]}
+                            onChange={(event) => {
+                                const servs = Array.from(event.target.selectedOptions).map(op => op.innerText);
+
+                                const selec = APIServico.GetServicos().filter(serv =>
+                                    servs.includes(serv.nome)
+                                );
+                                setServicos(selec);
+                            }}
                         />
                     </div>
                 </div>
                 <div className="form-horizontal-div">
                     {
-                        !clienteExiste &&
-                        <button type="submit" className="form-submit" onClick={() => { }}>Cadastrar</button>
+                        !cpfInvalido &&
+                        <button type="submit" className="sec-button">Cadastrar</button>
                     }
                 </div>
             </form>
-        </div>
+        </div >
     );
 }

@@ -1,14 +1,15 @@
-form {    
+.form {    
     width: 400px;
 
     display: flex;
     flex-direction: column;
     gap: 10px;
 
-    margin: 20px auto;
+    margin: auto;
+    padding: 50px 0px;
 }
 
-form .form-horizontal-div {
+.form .form-horizontal-div {
     display: flex;
     flex-direction: row;
     gap: 5px;
@@ -16,7 +17,7 @@ form .form-horizontal-div {
     width: 100%;
 }
 
-form .form-vertical-div {
+.form .form-vertical-div {
     background-color: pink;
 
     display: flex;
@@ -28,37 +29,40 @@ form .form-vertical-div {
     border-radius: 10px;
 }
 
-form label {
+.form label {
     font-size: 24px;
     text-align: center;
 
     width: 100%;
 }
 
-form input {
+.form input {
     background-color: white;
 
     border: 3px solid #f1f1f1;
     border-radius: 5px;
 
-    width: 100%;
+    margin: 0px 5px 5px 5px;
+
+    max-width: 100%;
     height: 30px;
 }
 
-form textarea {
+.form textarea {
     background-color: white;
 
+    margin: 0px 5px 5px 5px;
     border: 3px solid #f1f1f1;
     border-radius: 5px;
 
-    width: 100%;
+    max-width: 100%;
 
     height: 100px;
 
     resize: vertical;
 }
 
-form button {
+.form-button {
     background-color: pink;
     
     text-align: center;
@@ -68,6 +72,6 @@ form button {
     border-radius: 5px;
 }
 
-form .form-submit {
+.form .sec-button {
     font-size: 24px;
 }

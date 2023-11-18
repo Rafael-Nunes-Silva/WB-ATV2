@@ -6,13 +6,13 @@ export default function CadastroProduto() {
     const [valor, setValor] = useState(0);
     const [prodExiste, setProdExiste] = useState(false);
 
-    const HandleSubmit = function () {
+    function HandleSubmit () {
         APIProduto.AdicionarProduto(nome, valor);
     }
 
     return (
         <div>
-            <form onSubmit={HandleSubmit} className="form-cadastro">
+            <form onSubmit={HandleSubmit} className="form">
                 <div className="form-horizontal-div">
                     <div className="form-vertical-div">
                         <label for="nome">Nome</label>
@@ -49,7 +49,7 @@ export default function CadastroProduto() {
                 <div className="form-horizontal-div">
                     {
                         !prodExiste &&
-                        <button type="submit" className="form-submit">Cadastrar</button>
+                        <button type="submit" className="sec-button">Cadastrar</button>
                     }
                 </div>
             </form>
