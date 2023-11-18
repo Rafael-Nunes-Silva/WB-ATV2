@@ -5,13 +5,13 @@ import Select from "../../components/select";
 export default function DeletarProduto() {
     const [nomeProdSelecionado, setNomeProdSelecionado] = useState("");
 
-    const HandleSubmit = function (event) {
+    function HandleSubmit (event) {
         APIProduto.Deletar(nomeProdSelecionado);
     }
 
     return (
         <div>
-            <form onSubmit={HandleSubmit} className="form-cadastro">
+            <form onSubmit={HandleSubmit} className="form">
                 <div className="form-horizontal-div">
                     <div className="form-vertical-div">
                         <label for="produtos">Produtos</label>
@@ -28,7 +28,7 @@ export default function DeletarProduto() {
                     </div>
                 </div>
                 <div className="form-horizontal-div">
-                    <button type="submit" className="form-submit">Deletar</button>
+                    <button type="submit" className="sec-button">Deletar</button>
                 </div>
             </form>
         </div>
