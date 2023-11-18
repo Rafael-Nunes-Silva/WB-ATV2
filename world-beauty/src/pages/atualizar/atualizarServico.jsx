@@ -7,13 +7,13 @@ export default function AtualizarServico() {
     const [valorServSelecionado, setValorServSelecionado] = useState("");
     const [valor, setValor] = useState(0);
 
-    const HandleSubmit = function (event) {
+    function HandleSubmit (event) {
         APIServico.Atualizar(nomeServSelecionado, valor);
     }
 
     return (
         <div>
-            <form onSubmit={HandleSubmit} className="form-cadastro">
+            <form onSubmit={HandleSubmit} className="form">
                 <div className="form-horizontal-div">
                     <div className="form-vertical-div">
                         <label for="servicos">Serviços</label>
@@ -42,7 +42,7 @@ export default function AtualizarServico() {
                     </div>
                 </div>
                 <div className="form-horizontal-div">
-                    <button type="submit" className="form-submit">Atualizar</button>
+                    <button type="submit" className="sec-button">Atualizar</button>
                 </div>
             </form>
         </div>

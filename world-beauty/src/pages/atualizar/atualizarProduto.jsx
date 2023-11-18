@@ -7,13 +7,13 @@ export default function AtualizarProduto() {
     const [valorProdSelecionado, setValorProdSelecionado] = useState("");
     const [valor, setValor] = useState(0);
 
-    const HandleSubmit = function (event) {
+    function HandleSubmit (event) {
         APIProduto.Atualizar(nomeProdSelecionado, valor);
     }
 
     return (
         <div>
-            <form onSubmit={HandleSubmit} className="form-cadastro">
+            <form onSubmit={HandleSubmit} className="form">
                 <div className="form-horizontal-div">
                     <div className="form-vertical-div">
                         <label for="produtos">Produtos</label>
@@ -42,7 +42,7 @@ export default function AtualizarProduto() {
                     </div>
                 </div>
                 <div className="form-horizontal-div">
-                    <button type="submit" className="form-submit">Atualizar</button>
+                    <button type="submit" className="sec-button">Atualizar</button>
                 </div>
             </form>
         </div>
